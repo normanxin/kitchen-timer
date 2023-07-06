@@ -1,23 +1,33 @@
-import logo from './logo.svg';
 import './App.css';
+import Panel from './Panel';
+import Progress from './Progress';
+import Bottom from './Bottom';
+import useTimer from './hooks/useTimer';
 
 function App() {
+  const {
+    state,
+    handleIncrease, 
+    handleDecrease, 
+    handlePlay, 
+    handlePause,
+    handleReset,
+  } = useTimer();
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Panel
+        {...state}
+        onIncrease={handleIncrease}
+        onDecrease={handleDecrease}
+      />
+      <Progress value={state.elapsed} max={state.total} />
+      <Bottom
+        {...state}
+        onPlay={handlePlay}
+        onPause={handlePause}
+        onReset={handleReset}
+      />
     </div>
   );
 }
